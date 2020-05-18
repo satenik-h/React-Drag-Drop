@@ -1,42 +1,49 @@
 import React, { useState } from "react";
-import { render } from "react-dom";
 import {
   GridContextProvider,
   GridDropZone,
   GridItem,
-  swap
+  swap,
 } from "react-grid-dnd";
 import "./App.css";
 
-const pictures = ["https://s3-ap-southeast-2.amazonaws.com/images.getjarvis.com.au/9068b2bd089c037a144fc847b9967ee83dce0fe5299261a884adc3241a33604b.jpeg","https://s3-ap-southeast-2.amazonaws.com/images.getjarvis.com.au/9068b2bd089c037a144fc847b9967ee83dce0fe5299261a884adc3241a33604b.jpeg","https://s3-ap-southeast-2.amazonaws.com/images.getjarvis.com.au/9068b2bd089c037a144fc847b9967ee83dce0fe5299261a884adc3241a33604b.jpeg","https://s3-ap-southeast-2.amazonaws.com/images.getjarvis.com.au/9068b2bd089c037a144fc847b9967ee83dce0fe5299261a884adc3241a33604b.jpeg","https://s3-ap-southeast-2.amazonaws.com/images.getjarvis.com.au/9068b2bd089c037a144fc847b9967ee83dce0fe5299261a884adc3241a33604b.jpeg"]
+const pictures = [
+  "https://s3-ap-southeast-2.amazonaws.com/images.getjarvis.com.au/9068b2bd089c037a144fc847b9967ee83dce0fe5299261a884adc3241a33604b.jpeg",
+  "https://s3-ap-southeast-2.amazonaws.com/images.getjarvis.com.au/9068b2bd089c037a144fc847b9967ee83dce0fe5299261a884adc3241a33604b.jpeg",
+  "https://s3-ap-southeast-2.amazonaws.com/images.getjarvis.com.au/9068b2bd089c037a144fc847b9967ee83dce0fe5299261a884adc3241a33604b.jpeg",
+  "https://s3-ap-southeast-2.amazonaws.com/images.getjarvis.com.au/9068b2bd089c037a144fc847b9967ee83dce0fe5299261a884adc3241a33604b.jpeg",
+  "https://s3-ap-southeast-2.amazonaws.com/images.getjarvis.com.au/9068b2bd089c037a144fc847b9967ee83dce0fe5299261a884adc3241a33604b.jpeg",
+];
 
 function App() {
   const [items, setItems] = useState(
     pictures.map((picture, index) => ({
       src: picture,
-      id: index
+      id: index,
     }))
   );
 
-  
-
-const onChange = (_, sourceIndex, targetIndex) => {
-  if(sourceIndex < items.length && targetIndex < items.length) {
-    if (confirm(`Do you want to replace Image ${items[targetIndex].id} for image ${items[sourceIndex].id} ?`)) {
-      setItems(swap(items, sourceIndex, targetIndex));
-    }
-  }
-}
+  const onChange = (_, sourceIndex, targetIndex) => {
+    // if (sourceIndex < items.length && targetIndex < items.length) {
+    //   if (
+    //     alert(
+    //       `Do you want to replace Image ${items[targetIndex].id} for image ${items[sourceIndex].id} ?`
+    //     )
+    //   ) {
+    setItems(swap(items, sourceIndex, targetIndex));
+    //   }
+    // }
+  };
 
   return (
     <GridContextProvider onChange={onChange}>
       <GridDropZone boxesPerRow={3} rowHeight={200} className="grid">
-        {items.map(item => (
+        {items.map((item) => (
           <GridItem key={item.id} className="grid-item">
             <div
               className="img-container"
               style={{
-                backgroundImage: `url(${item.src})`
+                backgroundImage: `url(${item.src})`,
               }}
             >
               <span className="img-label">{item.id}</span>
